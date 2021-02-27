@@ -59,7 +59,13 @@
         <el-form-item label="父级分类：">
           <!-- options 用来指定数据源 -->
           <!-- props 用来指定配置对象 -->
-          <el-cascader expand-trigger="hover" :options="parentCateList" :props="cascaderProps" v-model="selectedKeys" @change="parentCateChanged" clearable change-on-select is-fold>
+          <el-cascader expand-trigger="hover" :options="parentCateList" 
+          :props="{
+              expandTrigger: 'hover',
+              value: 'cat_id',
+              label: 'cat_name',
+              children: 'children',
+              checkStrictly: true,}"  v-model="selectedKeys" @change="parentCateChanged" clearable  is-fold>
           </el-cascader>
         </el-form-item>
       </el-form>
@@ -136,11 +142,11 @@ export default {
       // 父级分类的列表
       parentCateList: [],
       // 指定级联选择器的配置对象
-      cascaderProps: {
-        value: 'cat_id',
-        label: 'cat_name',
-        children: 'children'
-      },
+      // cascaderProps: {
+      //   value: 'cat_id',
+      //   label: 'cat_name',
+      //   children: 'children'
+      // },
       // 选中的父级分类的Id数组
       selectedKeys: []
     }

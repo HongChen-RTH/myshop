@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-  <router-view></router-view>
+    <!-- 路由占位符 -->
+    <router-view></router-view>
   </div>
 </template>
 
@@ -9,7 +10,7 @@
 
 export default {
   name: 'app',
-
+  
 }
 </script>
 
