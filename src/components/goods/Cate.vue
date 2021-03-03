@@ -59,13 +59,13 @@
         <el-form-item label="父级分类：">
           <!-- options 用来指定数据源 -->
           <!-- props 用来指定配置对象 -->
-          <el-cascader expand-trigger="hover" :options="parentCateList" 
+          <el-cascader props.expandTrigger :options="parentCateList"
           :props="{
               expandTrigger: 'hover',
               value: 'cat_id',
               label: 'cat_name',
               children: 'children',
-              checkStrictly: true,}"  v-model="selectedKeys" @change="parentCateChanged" clearable  is-fold>
+              }"  v-model="selectedKeys" @change="parentCateChanged" clearable  is-fold>
           </el-cascader>
         </el-form-item>
       </el-form>
@@ -80,8 +80,6 @@
 
 <script>
 export default {
-  name: 'Cate',
-
   data() {
     return {
       // 查询条件
@@ -135,9 +133,7 @@ export default {
       },
       // 添加分类表单的验证规则对象
       addCateFormRules: {
-        cat_name: [
-          { required: true, message: '请输入分类名称', trigger: 'blur' }
-        ]
+        cat_name: [{ required: true, message: '请输入分类名称', trigger: 'blur' }]
       },
       // 父级分类的列表
       parentCateList: [],
@@ -198,7 +194,7 @@ export default {
         return this.$message.error('获取父级分类数据失败！')
       }
 
-      console.log(res.data)
+      // console.log(res.data)
       this.parentCateList = res.data
     },
     // 选择项发生变化触发这个函数
@@ -208,12 +204,9 @@ export default {
       // 反之，就说明没有选中任何父级分类
       if (this.selectedKeys.length > 0) {
         // 父级分类的Id
-        this.addCateForm.cat_pid = this.selectedKeys[
-          this.selectedKeys.length - 1
-        ]
+        this.addCateForm.cat_pid = this.selectedKeys[this.selectedKeys.length - 1]
         // 为当前分类的等级赋值
         this.addCateForm.cat_level = this.selectedKeys.length
-        return
       } else {
         // 父级分类的Id
         this.addCateForm.cat_pid = 0
@@ -225,10 +218,7 @@ export default {
     addCate() {
       this.$refs.addCateFormRef.validate(async valid => {
         if (!valid) return
-        const { data: res } = await this.$http.post(
-          'categories',
-          this.addCateForm
-        )
+        const { data: res } = await this.$http.post('categories', this.addCateForm)
 
         if (res.meta.status !== 201) {
           return this.$message.error('添加分类失败！')
@@ -247,7 +237,7 @@ export default {
       this.addCateForm.cat_pid = 0
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>
@@ -256,7 +246,7 @@ export default {
   margin-top: 15px;
 }
 
-.el-cascader {
-  width: 100%;
-}
+// .el-cascader {
+//   width: 80%;
+// }
 </style>
